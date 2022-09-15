@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/components/button.dart';
-import 'package:todo_app/components/input_bar.dart';
+import 'package:todo_app/blocs/todo_bloc/todo_bloc.dart';
+import 'package:todo_app/components/input_bar_component.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/components/line_component.dart';
+import 'package:todo_app/components/todo_list_component.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: const [
-            SizedBox(height: 20),
-            InputWidget(),
-            Button(),
-          ],
+    return BlocProvider<TodoBloc>(
+      create: (context) => TodoBloc(),
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: const [
+              SizedBox(height: 12),
+              InputBar(),
+              SizedBox(height: 12),
+              Line(),
+              SizedBox(height: 12),
+              TodoList(),
+            ],
+          ),
         ),
       ),
     );

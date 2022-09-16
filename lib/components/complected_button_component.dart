@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/bloc/todo_bloc.dart';
 
 class ComplactedButton extends StatelessWidget {
-  const ComplactedButton({super.key});
+  final TodoComplectedEvent onPressed;
+  final Color color;
+  const ComplactedButton({super.key, required this.color, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        backgroundColor: const Color(0xFF7DFC60),
+        backgroundColor: color,
       ),
-      onPressed: null,
+      onPressed: () => context.read<TodoBloc>().add(onPressed),
       child: const Icon(
-        Icons.gpp_good_sharp,
+        Icons.beenhere_outlined,
         color: Colors.black,
       ),
     );

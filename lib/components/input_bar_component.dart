@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app/blocs/todo_bloc/todo_bloc.dart';
+import 'package:todo_app/bloc/todo_bloc.dart';
 import 'package:todo_app/components/add_button_component.dart';
 
 class InputBar extends StatelessWidget {
@@ -31,7 +31,7 @@ class InputBar extends StatelessWidget {
                 ),
               ),
               const Expanded(child: SizedBox()),
-              if (state.isDisabled != true)
+              if (!state.isDisabled)
                 const AddButton(color: Color(0xFF7DFC60)),
               if (state.isDisabled) const AddButton(color: Colors.red)
             ],

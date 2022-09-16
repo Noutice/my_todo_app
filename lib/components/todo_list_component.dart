@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_app/blocs/todo_bloc/todo_bloc.dart';
+import 'package:todo_app/bloc/todo_bloc.dart';
 import 'package:todo_app/components/cancel_button_component.dart';
 import 'package:todo_app/components/complected_button_component.dart';
 
@@ -10,44 +10,58 @@ class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    return SizedBox(
-      width: screenWidth - 40,
-      height: screenHeight / 2.3,
-      child: BlocBuilder<TodoBloc, TodoState>(
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ...state.todoList.map(
-                  (ToDo e) => Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: Text(
-                            '${e.index}.  ${e.todo}',
-                            style: TextStyle(
+    return BlocBuilder<TodoBloc, TodoState>(
+      builder: (context, state) {
+        return Expanded(
+          child: SizedBox(
+            width: screenWidth - 40,
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: state.todoList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            text: '${index + 1}.  ',
+                            style: const TextStyle(
+                              color: Color(0xFF171717),
                               fontSize: 20,
-                              color: Colors.grey[800],
+                              fontWeight: FontWeight.bold,
                             ),
+                            children: [
+                              TextSpan(
+                                text: state.todoList[index].todo,
+                                style: TextStyle(
+                                  color: state.todoList[index].complectedColor,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const Expanded(child: SizedBox()),
-                        const ComplactedButton(),
-                        const SizedBox(width: 9),
-                        const CancelButton(),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(width: 12),
+                      ComplactedButton(
+                        color: state.todoList[index].complectedColor,
+                        onPressed: TodoComplectedEvent(index: index),
+                      ),
+                      // if (!isComplected)
+                      //   const ComplactedButton(color: Color(0xFFA8F582)),
+                      // if (isComplected)
+                      //   const ComplactedButton(color: Color(0xFF968E78)),
+                      const SizedBox(width: 9),
+                      CancelButton(onPressed: RemoveListEvent(index: index)),
+                    ],
                   ),
-                ),
-              ],
+                );
+              },
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

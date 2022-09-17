@@ -31,9 +31,8 @@ class InputBar extends StatelessWidget {
                 ),
               ),
               const Expanded(child: SizedBox()),
-              if (!state.isDisabled)
-                const AddButton(color: Color(0xFF7DFC60)),
-              if (state.isDisabled) const AddButton(color: Colors.red)
+              if (!state.isDisabled) const AddButton(color: Color(0xFF7DFC60)),
+              if (state.isDisabled) const AddButton(color: Colors.red),
             ],
           ),
         );

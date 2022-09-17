@@ -48,10 +48,6 @@ class TodoList extends StatelessWidget {
                         color: state.todoList[index].complectedColor,
                         onPressed: TodoComplectedEvent(index: index),
                       ),
-                      // if (!isComplected)
-                      //   const ComplactedButton(color: Color(0xFFA8F582)),
-                      // if (isComplected)
-                      //   const ComplactedButton(color: Color(0xFF968E78)),
                       const SizedBox(width: 9),
                       CancelButton(onPressed: RemoveListEvent(index: index)),
                     ],

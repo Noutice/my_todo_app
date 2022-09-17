@@ -27,13 +27,11 @@ void _addList(AddListEvent event, Emitter<TodoState> emit) {
     isDisabled = true;
   }
 
-  todoList.add(ToDo(controller.text, index, complectedColor: complectedColor));
+  todoList.add(ToDo(controller.text, complectedColor));
 
   emit(state.copyWith(
     todoList: todoList,
-    index: index,
     isDisabled: isDisabled,
-    isComplected: isComplected,
   ));
   controller.clear();
 }
@@ -45,11 +43,24 @@ void _removeList(RemoveListEvent event, Emitter<TodoState> emit) {
   isDisabled = false;
   emit(state.copyWith(
     todoList: todoList,
-    index: index,
     isDisabled: isDisabled,
   ));
-  controller.clear();
 }
 
 void _isComplected(TodoComplectedEvent event, Emitter<TodoState> emit) {
+  todoList[event.index].isComplected = !todoList[event.index].isComplected;
+  if (todoList[event.index].isComplected) {
+    complectedColor = const Color(0xFFA8F582);
+  } else {
+    complectedColor = const Color(0xFF968E78);
+  }
+  if (index == 5) {
+    isDisabled = true;
+  }
+  todoList[event.index].complectedColor = complectedColor;
+  emit(state.copyWith(
+    todoList: todoList,
+    isDisabled: isDisabled,
+  ));
+  complectedColor = const Color(0xFF968E78);
 }

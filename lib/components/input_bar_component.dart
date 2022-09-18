@@ -16,7 +16,6 @@ class InputBar extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 10,
                 child: SizedBox(
                   child: TextField(
                     controller: controller,
@@ -30,7 +29,7 @@ class InputBar extends StatelessWidget {
                   ),
                 ),
               ),
-              const Expanded(child: SizedBox()),
+              const SizedBox(width: 20),
               if (!state.isDisabled) const AddButton(color: Color(0xFF7DFC60)),
               if (state.isDisabled) const AddButton(color: Colors.red),
             ],

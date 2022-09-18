@@ -37,7 +37,7 @@ void _addList(AddListEvent event, Emitter<TodoState> emit) {
 }
 
 void _removeList(RemoveListEvent event, Emitter<TodoState> emit) {
-  if (index == 0) return;
+  // if (index == 0) return;
   todoList.removeAt(event.index);
   index--;
   isDisabled = false;

@@ -12,7 +12,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 }
 
-List<ToDo> todoList = [];
+List<Todo> todoList = [];
 int index = 0;
 final controller = TextEditingController();
 TodoState state = TodoState();
@@ -27,9 +27,9 @@ void _addList(AddListEvent event, Emitter<TodoState> emit) {
     isDisabled = true;
   }
 
-  todoList.add(ToDo(controller.text, complectedColor));
+  todoList.add(Todo(controller.text, complectedColor));
 
-  emit(state.copyWith(
+  emit(state.changeWith(
     todoList: todoList,
     isDisabled: isDisabled,
   ));
@@ -41,7 +41,7 @@ void _removeList(RemoveListEvent event, Emitter<TodoState> emit) {
   todoList.removeAt(event.index);
   index--;
   isDisabled = false;
-  emit(state.copyWith(
+  emit(state.changeWith(
     todoList: todoList,
     isDisabled: isDisabled,
   ));
@@ -58,7 +58,7 @@ void _isComplected(TodoComplectedEvent event, Emitter<TodoState> emit) {
     isDisabled = true;
   }
   todoList[event.index].complectedColor = complectedColor;
-  emit(state.copyWith(
+  emit(state.changeWith(
     todoList: todoList,
     isDisabled: isDisabled,
   ));

@@ -1,7 +1,7 @@
 part of 'todo_bloc.dart';
 
 class TodoState {
-  final List<ToDo> todoList;
+  final List<Todo> todoList;
   final bool isDisabled;
 
   TodoState({
@@ -9,8 +9,8 @@ class TodoState {
     this.todoList = const [],
   });
 
-  TodoState copyWith({
-    List<ToDo>? todoList,
+  TodoState changeWith({
+    List<Todo>? todoList,
     bool? isDisabled,
   }) {
     return TodoState(
@@ -20,10 +20,10 @@ class TodoState {
   }
 }
 
-class ToDo {
+class Todo {
   Color complectedColor;
   final String todo;
   bool isComplected;
 
-  ToDo(this.todo, this.complectedColor, [this.isComplected = false]);
+  Todo(this.todo, this.complectedColor, [this.isComplected = false]);
 }

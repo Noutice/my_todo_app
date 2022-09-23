@@ -4,8 +4,9 @@ import 'package:todo_app/bloc/todo_bloc.dart';
 
 
 class AddButton extends StatelessWidget {
+  final TextEditingController controller;
   final Color color;
-  const AddButton({super.key, required this.color});
+  const AddButton({super.key, required this.color, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class AddButton extends StatelessWidget {
         backgroundColor: color,
       ),
       onPressed: () {
-        context.read<TodoBloc>().add(AddListEvent());
+        context.read<TodoBloc>().add(AddListEvent(controller: controller));
       },
       child: const Text(
         'Add',

@@ -2,7 +2,7 @@ part of 'todo_bloc.dart';
 
 class TodoState {
   final List<Todo> todoList;
-  final bool isDisabled;
+  bool isDisabled;
 
   TodoState({
     this.isDisabled = false,
@@ -25,5 +25,5 @@ class Todo {
   final String todo;
   bool isComplected;
 
-  Todo(this.todo, this.complectedColor, [this.isComplected = false]);
+  Todo({required this.todo, required this.complectedColor, this.isComplected = false});
 }

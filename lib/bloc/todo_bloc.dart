@@ -6,61 +6,45 @@ part 'todo_state.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc() : super(TodoState()) {
-    on<AddListEvent>(_addList);
-    on<RemoveListEvent>(_removeList);
-    on<TodoComplectedEvent>(_isComplected);
+    on<AddListEvent>((AddListEvent event, Emitter<TodoState> emit) {
+      if (state.todoList.length == 5) return;
+      emit(
+        state.changeWith(
+          todoList: List<Todo>.from(state.todoList)
+            ..add(
+              Todo(
+                todo: event.controller.text,
+                complectedColor: const Color(0xFF968E78),
+              ),
+            ),
+          isDisabled: state.todoList.length + 1 == 5 ? true : false,
+        ),
+      );
+      event.controller.clear();
+    });
+
+    on<RemoveListEvent>((RemoveListEvent event, Emitter<TodoState> emit) {
+      emit(
+        state.changeWith(
+          todoList: List<Todo>.from(state.todoList)..removeAt(event.index),
+          isDisabled: false,
+        ),
+      );
+    });
+
+    on<TodoComplectedEvent>(
+        (TodoComplectedEvent event, Emitter<TodoState> emit) {
+      state.todoList[event.index].isComplected =
+          !state.todoList[event.index].isComplected;
+      if (state.todoList[event.index].isComplected) {
+        state.todoList[event.index].complectedColor = const Color(0xFFA8F582);
+      } else {
+        state.todoList[event.index].complectedColor = const Color(0xFF968E78);
+      }
+      emit(state.changeWith(
+        isDisabled: state.todoList.length == 5 ? true : false,
+      ));
+    });
+
   }
-}
-
-List<Todo> todoList = [];
-int index = 0;
-final controller = TextEditingController();
-TodoState state = TodoState();
-bool isDisabled = false;
-bool isComplected = false;
-Color complectedColor = const Color(0xFF968E78);
-
-void _addList(AddListEvent event, Emitter<TodoState> emit) {
-  if (index == 5) return;
-  index++;
-  if (index == 5) {
-    isDisabled = true;
-  }
-
-  todoList.add(Todo(controller.text, complectedColor));
-
-  emit(state.changeWith(
-    todoList: todoList,
-    isDisabled: isDisabled,
-  ));
-  controller.clear();
-}
-
-void _removeList(RemoveListEvent event, Emitter<TodoState> emit) {
-  // if (index == 0) return;
-  todoList.removeAt(event.index);
-  index--;
-  isDisabled = false;
-  emit(state.changeWith(
-    todoList: todoList,
-    isDisabled: isDisabled,
-  ));
-}
-
-void _isComplected(TodoComplectedEvent event, Emitter<TodoState> emit) {
-  todoList[event.index].isComplected = !todoList[event.index].isComplected;
-  if (todoList[event.index].isComplected) {
-    complectedColor = const Color(0xFFA8F582);
-  } else {
-    complectedColor = const Color(0xFF968E78);
-  }
-  if (index == 5) {
-    isDisabled = true;
-  }
-  todoList[event.index].complectedColor = complectedColor;
-  emit(state.changeWith(
-    todoList: todoList,
-    isDisabled: isDisabled,
-  ));
-  complectedColor = const Color(0xFF968E78);
 }

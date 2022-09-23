@@ -4,7 +4,8 @@ import 'package:todo_app/bloc/todo_bloc.dart';
 import 'package:todo_app/components/add_button_component.dart';
 
 class InputBar extends StatelessWidget {
-  const InputBar({super.key});
+  final TextEditingController controller = TextEditingController();
+  InputBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,16 @@ class InputBar extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 20),
-              if (!state.isDisabled) const AddButton(color: Color(0xFF7DFC60)),
-              if (state.isDisabled) const AddButton(color: Colors.red),
+              if (!state.isDisabled)
+                AddButton(
+                  color: const Color(0xFF7DFC60),
+                  controller: controller,
+                ),
+              if (state.isDisabled)
+                AddButton(
+                  color: Colors.red,
+                  controller: controller,
+                ),
             ],
           ),
         );

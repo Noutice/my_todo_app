@@ -15,13 +15,13 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: Column(
-            children: const [
-              SizedBox(height: 12),
+            children: [
+              const SizedBox(height: 12),
               InputBar(),
-              SizedBox(height: 12),
-              Line(),
-              SizedBox(height: 12),
-              TodoList(),
+              const SizedBox(height: 12),
+              const Line(),
+              const SizedBox(height: 12),
+              const TodoList(),
             ],
           ),
         ),

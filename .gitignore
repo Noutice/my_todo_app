@@ -47,8 +47,8 @@ app.*.map.json
 /android/app/release
 
 # My git ignore folders and files
-android/
-linux/
-macos/
-web/
-windows/
+/android/
+/linux/
+/macos/
+/web/
+/windows/

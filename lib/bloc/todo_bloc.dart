@@ -7,13 +7,25 @@ part 'todo_state.dart';
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc() : super(TodoState()) {
     on<AddListEvent>((AddListEvent event, Emitter<TodoState> emit) {
-      if (state.todoList.length == 5 || event.controller.text.isEmpty) return;
+      int k = 0;
+      bool x = true;
+      for (int i = 0; i < event.controller.text.length; i++) {
+        if (event.controller.text[i] == ' ') {
+          x = false;
+          k = i;
+        } else {
+          break;
+        }
+      }
+      String text = event.controller.text
+          .substring(x ? k : k + 1, event.controller.text.length);
+      if (state.todoList.length == 5 || text.isEmpty) return;
       emit(
         state.changeWith(
           todoList: List<Todo>.from(state.todoList)
             ..add(
               Todo(
-                todo: event.controller.text,
+                todo: text,
                 complectedColor: const Color(0xFF968E78),
               ),
             ),

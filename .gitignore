@@ -45,10 +45,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# My git ignore folders and files
-/android/
-/linux/
-/macos/
-/web/
-/windows/

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/bloc/todo_bloc.dart';
-import 'package:todo_app/components/add_button_component.dart';
+import 'package:todo_app/buttons/add_button_button.dart';
 
 class InputBar extends StatelessWidget {
   final TextEditingController controller = TextEditingController();
@@ -20,7 +20,8 @@ class InputBar extends StatelessWidget {
                 child: SizedBox(
                   child: TextField(
                     controller: controller,
-                    decoration: const InputDecoration(
+                    decoration: const 
+                    InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black, width: 9),
                       ),

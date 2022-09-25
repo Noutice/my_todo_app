@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/bloc/todo_bloc.dart';
-import 'package:todo_app/components/cancel_button_component.dart';
-import 'package:todo_app/components/complected_button_component.dart';
+import 'package:todo_app/buttons/cancel_button_button.dart';
+import 'package:todo_app/buttons/complected_button_button.dart';
 
 class TodoList extends StatelessWidget {
   const TodoList({super.key});
@@ -15,46 +15,57 @@ class TodoList extends StatelessWidget {
         return Expanded(
           child: SizedBox(
             width: screenWidth - 40,
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: state.todoList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: RichText(
-                          text: TextSpan(
-                            text: '${index + 1}.  ',
-                            style: const TextStyle(
-                              color: Color(0xFF171717),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: state.todoList[index].todo,
-                                style: TextStyle(
-                                  color: state.todoList[index].complectedColor,
+            child: state.todoList.isNotEmpty
+                ? ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: state.todoList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: '${index + 1}.  ',
+                                  style: const TextStyle(
+                                    color: Color(0xFF171717),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: state.todoList[index].todo,
+                                      style: TextStyle(
+                                        color: state
+                                            .todoList[index].complectedColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(width: 12),
+                            ComplactedButton(
+                              color: state.todoList[index].complectedColor,
+                              onPressed: TodoComplectedEvent(index: index),
+                            ),
+                            const SizedBox(width: 9),
+                            CancelButton(
+                                onPressed: RemoveListEvent(index: index)),
+                          ],
                         ),
+                      );
+                    },
+                  )
+                : const Center(
+                    child: Text(
+                      'nothing to do',
+                      style: TextStyle(
+                        fontSize: 25,
                       ),
-                      const SizedBox(width: 12),
-                      ComplactedButton(
-                        color: state.todoList[index].complectedColor,
-                        onPressed: TodoComplectedEvent(index: index),
-                      ),
-                      const SizedBox(width: 9),
-                      CancelButton(onPressed: RemoveListEvent(index: index)),
-                    ],
+                    ),
                   ),
-                );
-              },
-            ),
           ),
         );
       },

@@ -7,7 +7,7 @@ part 'todo_state.dart';
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc() : super(TodoState()) {
     on<AddListEvent>((AddListEvent event, Emitter<TodoState> emit) {
-      if (state.todoList.length == 5) return;
+      if (state.todoList.length == 5 || event.controller.text.isEmpty) return;
       emit(
         state.changeWith(
           todoList: List<Todo>.from(state.todoList)
@@ -45,6 +45,5 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         isDisabled: state.todoList.length == 5 ? true : false,
       ));
     });
-
   }
 }
